@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-family: Solitreo;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background: #fee2e9;
+  font-family: "Pangolin", cursive;
+  font-size: 1vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  top: 0vmin;
+}
+
+.envelope {
+  position: relative;
+  background: #f980a1;
+  height: 30vmin;
+  width: 47.9vmin;
+}
+
+.card {
+  position: absolute;
+  background: white;
+  height: 25vmin;
+  width: 43vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: 2.5vmin;
+  top: 0vmin;
+  /* animation: slide-rev 1.2s ease-out; */
+}
+
+.message {
+  position: absolute;
+  top: 5vmin;
+}
+
+.cover {
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-bottom: 15vmin solid #fba7bd;
+  border-left: 24vmin solid transparent;
+  border-right: 24vmin solid transparent;
+  top: 15vmin;
+  z-index: 3;
+}
+
+.cover::after {
+  /*left triangle*/
+  position: absolute;
+  content: "";
+  border-left: 24.5vmin solid #fcbbcc;
+  border-bottom: 15vmin solid transparent;
+  border-top: 15vmin solid transparent;
+  top: -15vmin;
+  left: -24vmin;
+}
+
+.cover::before {
+  position: absolute;
+  content: "";
+  border-right: 24.5vmin solid #fcbbcc;
+  border-bottom: 15vmin solid transparent;
+  border-top: 15vmin solid transparent;
+  top: -15vmin;
+  left: -0.5vmin;
+}
+
+.lid {
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-top: 15vmin solid #f980a1;
+  border-left: 24vmin solid transparent;
+  border-right: 24vmin solid transparent;
+  top: 0;
+  transform-origin: top;
+  /* animation: open-rev 3s; */
+}
+
+.container:hover .lid {
+  animation: open 1.5s;
+  animation-fill-mode: forwards;
+}
+
+.container:hover .card {
+  animation: slide 1.2s;
+  animation-delay: 1.5s;
+  animation-fill-mode: forwards;
+}
+
+.shadow {
+  position: relative;
+  top: 3vmin;
+  border-radius: 50%;
+  opacity: 0.7;
+  height: 2vmin;
+  width: 48vmin;
+  background: #e8c5d0;
+}
+
+.heart {
+  position: relative;
+  width: 5vmin;
+  height: 4vmin;
+  top: 7vmin;
+  left: -1vmin;
+}
+
+.heart:before,
+.heart:after {
+  position: absolute;
+  content: "";
+  left: 2.5vmin;
+  top: 7vmin;
+  width: 2.5vmin;
+  height: 4vmin;
+  background: #f40b4a;
+  border-radius: 2.5vmin 2.5vmin 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+
+.heart:after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+@keyframes open {
+  100% {
+    transform: rotatex(180deg);
+  }
+}
+
+@keyframes slide {
+  100% {
+    transform: translatey(-15vmin);
+    z-index: 2;
+  }
+}
+
+@keyframes open-rev {
+  from {
+    transform: rotatex(-180deg);
+  }
+}
+
+@keyframes slide-rev {
+  from {
+    transform: translatey(-15vmin);
+  }
+}
+
+    </style>
+ <style>
+    .music-player {
+position: fixed;
+bottom: 20px;
+left: 20px;
+width: 400px;
+background-color: #fff9f3; /* Paper-like color */
+border: 2px solid #d4b5a7; /* Paper edges */
+border-radius: 10px;
+padding: 15px;
+box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+font-family: 'Cursive', sans-serif;
+color: #663d2f;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.player-controls {
+display: flex;
+align-items: center;
+}
+
+.control-btn {
+background-color: #e8c1b0;
+border: none;
+padding: 10px;
+border-radius: 50%;
+font-size: 16px;
+color: #fff;
+cursor: pointer;
+margin: 0 5px;
+}
+
+.control-btn i {
+font-size: 18px;
+}
+
+.control-btn:hover {
+background-color: #d49b91;
+}
+
+.song-info {
+display: flex;
+align-items: center;
+}
+
+.song-image {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+object-fit: cover;
+margin-right: 15px;
+}
+
+.song-details {
+display: flex;
+flex-direction: column;
+}
+
+.song-title {
+font-size: 16px;
+font-weight: bold;
+}
+
+.song-artist {
+font-size: 14px;
+color: #7a4e41;
+}
+
+.progress-bar {
+margin-top: 10px;
+}
+
+input[type="range"] {
+width: 150px;
+-webkit-appearance: none;
+height: 5px;
+background: #d49b91;
+border-radius: 5px;
+outline: none;
+}
+
+</style>
+</head>
+<body>
+    
+    <link href='https://fonts.googleapis.com/css?family=Solitreo' rel='stylesheet'>
+
+    <div class="container">
+      <div class="envelope"></div>
+      <div class="card">
+        <h1 class="message">Roses are red,<br>Violets are blue,<br>Unexpected '{'<br>on line 32.</h1>
+        <div class="heart"></div>
+      </div>
+      <div class="cover"></div>
+      <div class="lid"></div>
+      <div class="shadow"></div>
+    </div>
+  
+    <div class="music-player">
+        <div class="song-info">
+            <img src="https://raw.githubusercontent.com/NourShady/Abo_ElFtoh/main/channels4_profile.jpg" alt="Song Image" class="song-image">
+            <div class="song-details">
+                <span class="song-title">Love Song</span>
+                <span class="song-artist">Artist Name</span>
+                <div class="progress-bar">
+                    <input type="range" id="progress" value="0" min="0" max="100">
+                </div>
+            </div>
+        </div>
+        <audio id="audio-player" src="https://raw.githubusercontent.com/NourShady/Abo_ElFtoh/main/read.mp3"></audio>
+        <div class="player-controls">
+            <button class="control-btn" id="prev-btn">
+                <i class="fas fa-backward"></i>
+            </button>
+            <button class="control-btn play-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="control-btn" id="next-btn">
+                <i class="fas fa-forward"></i>
+            </button>
+        </div>
+    </div>
+    
+
+
+    <script>
+        const audioPlayer = document.getElementById('audio-player');
+const playButton = document.querySelector('.play-btn');
+const progress = document.getElementById('progress');
+
+playButton.addEventListener('click', () => {
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        playButton.innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+        audioPlayer.pause();
+        playButton.innerHTML = '<i class="fas fa-play"></i>';
+    }
+});
+
+audioPlayer.addEventListener('timeupdate', () => {
+    const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    progress.value = progressPercent;
+});
+
+progress.addEventListener('input', () => {
+    const seekTime = (progress.value / 100) * audioPlayer.duration;
+    audioPlayer.currentTime = seekTime;
+});
+
+    </script>
+</body>
+</html>
